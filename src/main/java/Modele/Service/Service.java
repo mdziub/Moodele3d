@@ -22,7 +22,7 @@ public class Service{
     private PreparedStatement deleteFromCategoryStat;
     private PreparedStatement deleteFromModeleStat;
 
-    public Servie(){
+    public Service(){
         try {
             Class.forName(DRIVER);
         }
@@ -57,8 +57,45 @@ public class Service{
             e.printStackTrace();
         }
 
+    }
+    public boolean createTable(){
+
+        String createModelString="CREATE TABLE IF NOT EXISTS modele ( id_modele INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nazwaMod TEXT, producent TEXT, program TEXT)";
+        String createCategoryString="CREATE TABLE IF NOT EXISTS kategoria ( id_kategoria INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, nazwaKat TEXT, opis TEXT, numer INTEGER ,idMod INTEGER,FOREIGN KEY(idMod) REFERENCES modele(id_modele))";
+
+        try {
+            stat.execute(createModelString);
+            stat.execute(createCategoryString);
+        } catch (SQLException e) {
+            System.err.println("Blad przy tworzeniu tabeli");
+            e.printStackTrace();
+            return false;
         }
-
-
+        return true;
+    }
+    public boolean insertInCategory(CategoryEntity cat){
+        try {
+            insertCategoryStat.setString(1, cat.getNazwaKat());
+            insertCategoryStat.setString(2, cat.getOpis());
+            insertCategoryStat.setInt(3, cat.getNumer());
+            insertCategoryStat.setLong(4,cat.getIdmod());
+            insertCategoryStat.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public boolean insertInModel(ModelEntity mod){
+        try {
+            insertModeleStat.setString(1, mod.getNazwaMod());
+            insertModeleStat.setString(2, mod.getProducent());
+            insertModeleStat.setString(3,mod.getProgram());
+            insertModeleStat.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }
