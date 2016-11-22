@@ -20,7 +20,7 @@ public class Service{
     private PreparedStatement dropTableCategoryStat;
     private PreparedStatement dropTableModeleStat;
     private PreparedStatement deleteFromCategoryStat;
-    private PreparedStatement deleteFromModeleStat;
+    private PreparedStatement deleteFromModelStat;
 
     public Service(){
         try {
@@ -44,7 +44,7 @@ public class Service{
                     ("Select * from modele");
             deleteFromCategoryStat=conn.prepareStatement(
                     "DELETE FROM kategoria where id_kategoria=?");
-            deleteFromModeleStat=conn.prepareStatement(
+            deleteFromModelStat=conn.prepareStatement(
                     "DELETE FROM modele WHERE id_modele=?");
             dropTableCategoryStat=conn.prepareStatement(
                     "DROP table kategoria");
@@ -134,5 +134,50 @@ public class Service{
             e.printStackTrace();
         }
         return allModels;
+    }
+    public boolean deleteFromCategoryById(CategoryEntity idCat){
+        try {
+            deleteFromCategoryStat.setLong(1,idCat.getId_kategoria());
+            deleteFromCategoryStat.execute();
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public boolean deleteFromModelById(ModelEntity idMod){
+        try {
+            deleteFromModelStat.setLong(1,idMod.getId_modele());
+            deleteFromModelStat.execute();
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public boolean dropTable(){
+        try {
+            dropTableCategoryStat.execute();
+            dropTableModeleStat.execute();
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public boolean closeCon(){
+        try {
+            conn.close();
+
+        } catch(SQLException e) {
+            System.err.println("Problem z zamknieciem polaczenia");
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }
