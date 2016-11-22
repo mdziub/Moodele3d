@@ -6,45 +6,66 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
-/**
- * Created by macko_000 on 2016-11-21.
- */
+
 public class ServiceTest {
 
+    Service serv;
 
-    private Service serwus;
     @Before
     public void setUp() throws Exception {
-        serwus=new Service();
+        serv =new Service();
     }
-
     @After
     public void tearDown() throws Exception {
 
     }
     @Test
     public void createTable() throws Exception {
-    //prze konstruktor
+        assertTrue(serv.createTable());
     }
-
-    @Test
+    public void testConn() throws Exception {
+        Exception ex = null;
+        try {
+            new Service();
+        } catch (Exception e) {
+            ex = e;
+        }
+        assertEquals(null,ex);
+    }
     public void insertInCategory() throws Exception {
-//        CategoryEntity cos=new CategoryEntity();
-//        cos.setNazwaKat("ja pierdole");
-//        cos.
-//        assertTrue(serwus.insertInCategory(cos));
+        ModelEntity m1=new ModelEntity();
+        m1.setNazwaMod("sdadasdasdasd");
+        m1.setProducent("sdasdsad");
+        m1.setProgram("sdsadsad");
+        serv.insertInModel(m1);
+        List<ModelEntity> me=serv.selectModel();
+
+        CategoryEntity c1=new CategoryEntity();
+        c1.setNazwaKat("sfsf");
+        c1.setNumer(123213);
+        c1.setOpis("dupa");
+        c1.setIdmod(me.get(0).getId_modele());
+        assertTrue(serv.insertInCategory(c1));
+        List<CategoryEntity> ce=serv.selectCategory();
+        assertEquals("sfsf",ce.get(0).getNazwaKat());
+
 
     }
-
     @Test
     public void insertInModel() throws Exception {
-        ModelEntity model=new ModelEntity();
-        model.setNazwaMod("cscacacxas");
-        model.setProducent("sadadad");
-        model.setProgram("wibro");
-        serwus.insertInModel(model);
+        ModelEntity m1=new ModelEntity();
+        m1.setNazwaMod("sdadasdasdasd");
+        m1.setProducent("sdasdsad");
+        m1.setProgram("sdsadsad");
+        assertTrue(serv.insertInModel(m1));
+        List<ModelEntity> me=serv.selectModel();
+        assertEquals("sdadasdasdasd",me.get(0).getNazwaMod());
 
     }
+
 }

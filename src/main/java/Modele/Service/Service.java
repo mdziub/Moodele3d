@@ -98,4 +98,41 @@ public class Service{
         }
         return true;
     }
+    public List<CategoryEntity> selectCategory(){
+        List<CategoryEntity> allCategories =new ArrayList<>();
+        try {
+            ResultSet resultSet = selectCategoryStat.executeQuery();
+            while (resultSet.next()) {
+                CategoryEntity c=new CategoryEntity();
+                c.setId_kategoria(resultSet.getLong("id_kategoria"));
+                c.setOpis(resultSet.getString("opis"));
+                c.setNazwaKat(resultSet.getString("nazwaKat"));
+                c.setNumer(resultSet.getInt("numer"));
+                c.setIdmod(resultSet.getLong("idMod"));
+                allCategories.add(c);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allCategories;
+    }
+    public List<ModelEntity> selectModel(){
+        List<ModelEntity> allModels =new ArrayList<>();
+        try {
+            ResultSet resultSet = selectModeleStat.executeQuery();
+            while (resultSet.next()) {
+                ModelEntity m=new ModelEntity();
+                m.setId_modele(resultSet.getLong("id_modele"));
+                m.setNazwaMod(resultSet.getString("nazwaMod"));
+                m.setProducent(resultSet.getString("producent"));
+                m.setProgram(resultSet.getString("program"));
+                allModels.add(m);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allModels;
+    }
 }
