@@ -22,12 +22,15 @@ public class ServiceTest {
     }
     @After
     public void tearDown() throws Exception {
-
+        serv.dropTable();
+        serv.closeCon();
     }
     @Test
     public void createTable() throws Exception {
         assertTrue(serv.createTable());
     }
+
+    @Test
     public void testConn() throws Exception {
         Exception ex = null;
         try {
@@ -37,6 +40,8 @@ public class ServiceTest {
         }
         assertEquals(null,ex);
     }
+
+    @Test
     public void insertInCategory() throws Exception {
         ModelEntity m1=new ModelEntity();
         m1.setNazwaMod("sdadasdasdasd");
