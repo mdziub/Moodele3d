@@ -27,7 +27,7 @@ public class ServiceTest {
     }
     @Test
     public void createTable() throws Exception {
-        assertTrue(serv.createTable());
+        assertTrue(serv.createTable()); //jesli createTable jest true
     }
 
     @Test
@@ -43,58 +43,58 @@ public class ServiceTest {
 
     @Test
     public void insertInCategory() throws Exception {
-        ModelEntity m1=new ModelEntity();
-        m1.setNazwaMod("sdadasdasdasd");
-        m1.setProducent("sdasdsad");
-        m1.setProgram("sdsadsad");
-        serv.insertInModel(m1);
-        List<ModelEntity> me=serv.selectModel();
+        ModelEntity m1=new ModelEntity(); //tworzy nowy obiekt klasy
+        m1.setNazwaMod("248-31");  //dzieki set i get mozemy odniesc sie do prywatnego pola w innej klasie poprzez uzycie pola publicznego
+        m1.setProducent("Klose");
+        m1.setProgram("3ds max");
+        serv.insertInModel(m1); //dodaje rekordy do tabeli
+        List<ModelEntity> me=serv.selectModel(); //przypisuje do kolekcji (listy modeli) me obiekty z selectModel
 
-        CategoryEntity c1=new CategoryEntity();
-        c1.setNazwaKat("sfsf");
+        CategoryEntity c1=new CategoryEntity();//tworzy nowy obiekt klasy category
+        c1.setNazwaKat("Milo");
         c1.setNumer(123213);
-        c1.setOpis("dupa");
-        c1.setIdmod(me.get(0).getId_modele());
-        assertTrue(serv.insertInCategory(c1));
-        List<CategoryEntity> ce=serv.selectCategory();
-        assertEquals("sfsf",ce.get(0).getNazwaKat());
+        c1.setOpis("Biurka male z wysuwka");
+        c1.setIdmod(me.get(0).getId_modele()); //pobiera id 1wszego obiektu z kolekcji
+        assertTrue(serv.insertInCategory(c1)); //sprawdza czy insert zwrocil wartosc true
+        List<CategoryEntity> ce=serv.selectCategory();  //przypisuje do kolekcji obiekty z selectCategory
+        assertEquals("Milo",ce.get(0).getNazwaKat()); //sprawdza czy 1wszy obiekt z katregorii to podana nazwa katgorii
 
 
     }
     @Test
     public void insertInModel() throws Exception {
         ModelEntity m1=new ModelEntity();
-        m1.setNazwaMod("sdadasdasdasd");
-        m1.setProducent("sdasdsad");
-        m1.setProgram("sdsadsad");
+        m1.setNazwaMod("246-30");
+        m1.setProducent("Klose");
+        m1.setProgram("3ds max");
         assertTrue(serv.insertInModel(m1));
         List<ModelEntity> me=serv.selectModel();
-        assertEquals("sdadasdasdasd",me.get(0).getNazwaMod());
+        assertEquals("246-30",me.get(0).getNazwaMod());
 
     }
     @Test
     public void selectCategory() throws Exception {
         ModelEntity m1=new ModelEntity();
-        m1.setNazwaMod("sdadasdasdasd");
-        m1.setProducent("sdasdsad");
-        m1.setProgram("sdsadsad");
+        m1.setNazwaMod("100323");
+        m1.setProducent("Klose");
+        m1.setProgram("2020 Fusion");
         serv.insertInModel(m1);
         List<ModelEntity> me=serv.selectModel();
 
         CategoryEntity c1=new CategoryEntity();
-        c1.setNazwaKat("sfsf");
+        c1.setNazwaKat("Milo");
         c1.setNumer(123213);
-        c1.setOpis("dupa");
+        c1.setOpis("Biurka bez kontenerow");
         c1.setIdmod(me.get(0).getId_modele());
         CategoryEntity c2=new CategoryEntity();
-        c2.setNazwaKat("sfsf");
+        c2.setNazwaKat("Venice");
         c2.setNumer(123213);
-        c2.setOpis("dupa");
+        c2.setOpis("Komody Venice ");
         c2.setIdmod(me.get(0).getId_modele());
         CategoryEntity c3=new CategoryEntity();
-        c3.setNazwaKat("sfsf");
+        c3.setNazwaKat("Venice");
         c3.setNumer(123213);
-        c3.setOpis("dupa");
+        c3.setOpis("Lozka Venice");
         c3.setIdmod(me.get(0).getId_modele());
         assertTrue(serv.insertInCategory(c1));
         assertTrue(serv.insertInCategory(c2));
@@ -108,17 +108,17 @@ public class ServiceTest {
     @Test
     public void selectModel() throws Exception {
         ModelEntity m1=new ModelEntity();
-        m1.setNazwaMod("sdadasdasdasd");
-        m1.setProducent("sdasdsad");
-        m1.setProgram("sdsadsad");
+        m1.setNazwaMod("1002-10");
+        m1.setProducent("Klose");
+        m1.setProgram("3ds max");
         ModelEntity m2=new ModelEntity();
-        m2.setNazwaMod("sdadasdasdasd");
-        m2.setProducent("sdasdsad");
-        m2.setProgram("sdsadsad");
+        m2.setNazwaMod("1002-15");
+        m2.setProducent("Klose");
+        m2.setProgram("3ds max");
         ModelEntity m3=new ModelEntity();
-        m3.setNazwaMod("sdadasdasdasd");
-        m3.setProducent("sdasdsad");
-        m3.setProgram("sdsadsad");
+        m3.setNazwaMod("1002-20");
+        m3.setProducent("Klose");
+        m3.setProgram("3ds max");
         assertTrue(serv.insertInModel(m1));
         assertTrue(serv.insertInModel(m2));
         assertTrue(serv.insertInModel(m3));
@@ -128,15 +128,15 @@ public class ServiceTest {
     @Test
     public void deleteFromCategoryById() throws Exception {
         ModelEntity m1=new ModelEntity();
-        m1.setNazwaMod("sdadasdasdasd");
-        m1.setProducent("sdasdsad");
-        m1.setProgram("sdsadsad");
+        m1.setNazwaMod("1002-18");
+        m1.setProducent("Klose");
+        m1.setProgram("3ds max");
         serv.insertInModel(m1);
         List<ModelEntity> me=serv.selectModel();
         CategoryEntity c3=new CategoryEntity();
-        c3.setNazwaKat("sfsf");
+        c3.setNazwaKat("Venice");
         c3.setNumer(123213);
-        c3.setOpis("dupa");
+        c3.setOpis("Szafy Venice");
         c3.setIdmod(me.get(0).getId_modele());
         assertTrue(serv.insertInCategory(c3));
 
@@ -148,9 +148,9 @@ public class ServiceTest {
     @Test
     public void deleteFromModelById() throws Exception {
         ModelEntity m1=new ModelEntity();
-        m1.setNazwaMod("sdadasdasdasd");
-        m1.setProducent("sdasdsad");
-        m1.setProgram("sdsadsad");
+        m1.setNazwaMod("1002-21");
+        m1.setProducent("Klose");
+        m1.setProgram("3ds max");
         serv.insertInModel(m1);
         List<ModelEntity> listMod=serv.selectModel();
         assertTrue(serv.deleteFromModelById(listMod.get(0)));
@@ -162,9 +162,9 @@ public class ServiceTest {
     public void dropTable() throws Exception {
         assertTrue(serv.dropTable());
         ModelEntity m1=new ModelEntity();
-        m1.setNazwaMod("sdadasdasdasd");
-        m1.setProducent("sdasdsad");
-        m1.setProgram("sdsadsad");
+        m1.setNazwaMod("1002-16");
+        m1.setProducent("Klose");
+        m1.setProgram("2020 Fusion");
         assertFalse(serv.insertInModel(m1));
     }
     @Test
