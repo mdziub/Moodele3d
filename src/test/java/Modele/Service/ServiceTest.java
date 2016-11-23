@@ -44,11 +44,11 @@ public class ServiceTest {
     @Test
     public void insertInCategory() throws Exception {
         ModelEntity m1=new ModelEntity(); //tworzy nowy obiekt klasy
-        m1.setNazwaMod("248-31");  //dzieki set i get mozemy odniesc sie do prywatnego pola w innej klasie poprzez uzycie pola publicznego
+        m1.setNazwaMod("248-31");  //dzieki set i get mozemy odniesc sie do prywatnego pola w innej klasie poprzez uzycie metody publicznej
         m1.setProducent("Klose");
         m1.setProgram("3ds max");
         serv.insertInModel(m1); //dodaje rekordy do tabeli
-        List<ModelEntity> me=serv.selectModel(); //przypisuje do kolekcji (listy modeli) me obiekty z selectModel
+        List<ModelEntity> me=serv.selectModel(); //przypisuje do kolekcji (listy obiektow) me obiekty z selectModel
 
         CategoryEntity c1=new CategoryEntity();//tworzy nowy obiekt klasy category
         c1.setNazwaKat("Milo");
@@ -63,13 +63,13 @@ public class ServiceTest {
     }
     @Test
     public void insertInModel() throws Exception {
-        ModelEntity m1=new ModelEntity();
+        ModelEntity m1=new ModelEntity(); //nowy obiekt klasy ModelEntity
         m1.setNazwaMod("246-30");
         m1.setProducent("Klose");
         m1.setProgram("3ds max");
-        assertTrue(serv.insertInModel(m1));
-        List<ModelEntity> me=serv.selectModel();
-        assertEquals("246-30",me.get(0).getNazwaMod());
+        assertTrue(serv.insertInModel(m1)); //sprawdza, czy reordy zostaly dodane
+        List<ModelEntity> me=serv.selectModel(); //przypisujemy kolekcje z selectModel do me
+        assertEquals("246-30",me.get(0).getNazwaMod()); //sprawdza, czy 1wszy obiekt kolekcji to podana nazwa
 
     }
     @Test
@@ -90,7 +90,7 @@ public class ServiceTest {
         c2.setNazwaKat("Venice");
         c2.setNumer(123213);
         c2.setOpis("Komody Venice ");
-        c2.setIdmod(me.get(0).getId_modele());
+        c2.setIdmod(me.get(0).getId_modele()); //pobiera i przypisuje id 1wszego elementu
         CategoryEntity c3=new CategoryEntity();
         c3.setNazwaKat("Venice");
         c3.setNumer(123213);
