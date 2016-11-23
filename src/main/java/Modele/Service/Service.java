@@ -21,6 +21,7 @@ public class Service{
     private PreparedStatement dropTableModeleStat;
     private PreparedStatement deleteFromCategoryStat;
     private PreparedStatement deleteFromModelStat;
+    private PreparedStatement updateModelsStat;
 
     public Service(){
         try {
@@ -50,6 +51,8 @@ public class Service{
                     "DROP table kategoria");
             dropTableModeleStat= conn.prepareStatement(
                     "DROP TABLE modele");
+            updateModelsStat = conn.prepareStatement(
+                    "Update modele set nazwaMod = ?, Producent=?, Program=? WHERE id_modele=?");
 
 
         } catch (SQLException e) {
@@ -98,6 +101,22 @@ public class Service{
         }
         return true;
     }
+
+    public boolean updateModel (ModelEntity mod){
+        try {
+            updateModelsStat.setString(1,mod.getNazwaMod());
+            updateModelsStat.setString(2,mod.getProducent());
+            updateModelsStat.setString(3,mod.getProgram());
+            updateModelsStat.setLong(4,mod.getId_modele());
+            updateModelsStat.executeUpdate();
+        }catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+        }
+
+
     public List<CategoryEntity> selectCategory(){
         List<CategoryEntity> allCategories =new ArrayList<>();
         try {
