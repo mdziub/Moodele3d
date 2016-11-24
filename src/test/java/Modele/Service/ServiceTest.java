@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 public class ServiceTest {
 
 
+
     Service serv;
 
     @Before
@@ -71,6 +72,31 @@ public class ServiceTest {
         assertTrue(serv.insertInModel(m1)); //sprawdza, czy reordy zostaly dodane
         List<ModelEntity> me=serv.selectModel(); //przypisujemy kolekcje z selectModel do me
         assertEquals("246-30",me.get(0).getNazwaMod()); //sprawdza, czy 1wszy obiekt kolekcji to podana nazwa
+
+    }
+
+    @Test
+    public void updateCategory() throws Exception {
+        ModelEntity m1=new ModelEntity();
+        m1.setNazwaMod("100323");
+        m1.setProducent("Klose");
+        m1.setProgram("2020 Fusion");
+        serv.insertInModel(m1);
+        List<ModelEntity> me=serv.selectModel();
+
+        CategoryEntity c1=new CategoryEntity();
+        c1.setNazwaKat("Milo");
+        c1.setNumer(123213);
+        c1.setOpis("Biurka bez kontenerow");
+        c1.setIdmod(me.get(0).getId_modele());
+        assertTrue(serv.insertInCategory(c1));
+
+        List<CategoryEntity> ce=serv.selectCategory();
+        CategoryEntity categoryEntity=ce.get(0);
+        categoryEntity.setNazwaKat("Nowa");
+
+        assertTrue(serv.updateCategory(categoryEntity));
+
 
     }
 

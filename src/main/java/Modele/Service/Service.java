@@ -22,6 +22,7 @@ public class Service{
     private PreparedStatement deleteFromCategoryStat;
     private PreparedStatement deleteFromModelStat;
     private PreparedStatement updateModelsStat;
+    private PreparedStatement updateCategoryStat;
 
     public Service(){
         try {
@@ -53,6 +54,8 @@ public class Service{
                     "DROP TABLE modele");
             updateModelsStat = conn.prepareStatement(
                     "Update modele set nazwaMod=? WHERE id_modele=?");
+            updateCategoryStat = conn.prepareStatement(
+                    "Update kategoria set nazwaKat=? WHERE id_kategoria=?");
 
 
         } catch (SQLException e) {
@@ -96,6 +99,19 @@ public class Service{
             insertModeleStat.setString(3,mod.getProgram());
             insertModeleStat.execute();
         } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateCategory(CategoryEntity cat){
+      try{
+          updateCategoryStat.setString(1, cat.getNazwaKat());
+          updateCategoryStat.setLong(2,cat.getId_kategoria());
+          updateCategoryStat.executeUpdate();
+      }
+        catch(SQLException e){
             e.printStackTrace();
             return false;
         }
