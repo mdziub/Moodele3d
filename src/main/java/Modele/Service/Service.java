@@ -52,7 +52,7 @@ public class Service{
             dropTableModeleStat= conn.prepareStatement(
                     "DROP TABLE modele");
             updateModelsStat = conn.prepareStatement(
-                    "Update modele set nazwaMod = ?, Producent=?, Program=? WHERE id_modele=?");
+                    "Update modele set nazwaMod=? WHERE id_modele=?");
 
 
         } catch (SQLException e) {
@@ -105,9 +105,7 @@ public class Service{
     public boolean updateModel (ModelEntity mod){
         try {
             updateModelsStat.setString(1,mod.getNazwaMod());
-            updateModelsStat.setString(2,mod.getProducent());
-            updateModelsStat.setString(3,mod.getProgram());
-            updateModelsStat.setLong(4,mod.getId_modele());
+            updateModelsStat.setLong(2,mod.getId_modele());
             updateModelsStat.executeUpdate();
         }catch(SQLException e) {
             e.printStackTrace();

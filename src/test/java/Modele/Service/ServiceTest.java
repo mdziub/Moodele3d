@@ -84,8 +84,6 @@ public class ServiceTest {
         List<ModelEntity> me=serv.selectModel();
         ModelEntity modelEntity=me.get(0);
         modelEntity.setNazwaMod("nowa");
-        modelEntity.setProducent("nowy");
-        modelEntity.setProgram("3ds max");
         assertTrue(serv.updateModel(modelEntity));
 
     }
